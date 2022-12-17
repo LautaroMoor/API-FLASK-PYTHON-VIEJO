@@ -1,0 +1,22 @@
+[
+    {
+        "id":"1",
+        "usuario":"lautaro",
+        "contrasena":"moor"
+    },
+    {
+        "id":"2",
+        "usuario":"tomas",
+        "contrasena":"123"
+    },
+    {
+        "id":"3",
+        "usuario":"santiago",
+        "contrasena":"123456"
+    },
+    {
+        "id":"4",
+        "usuario":"1",
+        "contrasena":"1"
+    }
+]

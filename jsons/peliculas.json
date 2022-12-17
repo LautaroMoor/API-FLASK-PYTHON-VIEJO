@@ -1,0 +1,163 @@
+[
+    {
+        "id": "1",
+        "titulo": "Shrek",
+        "ano": "2001",
+        "idDirector": "1",
+        "idGenero": "1",
+        "sinopsis": "Un ogro divertido",
+        "imagen": "https://static.wikia.nocookie.net/shrek/images/7/7c/Shrek_Poster_02.jpg/revision/latest?cb=20190315035135&path-prefix=es",
+        "idComentarios": [
+            "1"
+        ]
+    },
+    {
+        "id": "2",
+        "titulo": "Muertos de risa",
+        "ano": "2001",
+        "idDirector": "1",
+        "idGenero": "1",
+        "sinopsis": "Mueren de risa",
+        "imagen": "https://static.wikia.nocookie.net/doblaje/images/6/66/Muertos-de-risa-poster.jpg/revision/latest?cb=20121102020611&path-prefix=es",
+        "idComentarios": [
+            "2",
+            "3"
+        ]
+    },
+    {
+        "id": "3",
+        "titulo": "No miren arriba",
+        "ano": "2001",
+        "idDirector": "1",
+        "idGenero": "2",
+        "sinopsis": "Cae un meteorito",
+        "imagen": "https://es.web.img2.acsta.net/pictures/21/11/29/17/20/1865984.jpg",
+        "idComentarios": [
+            "1"
+        ]
+    },
+    {
+        "id": "4",
+        "titulo": "\u00c2\u00a1Nop!",
+        "ano": "2001",
+        "idDirector": "1",
+        "idGenero": "2",
+        "sinopsis": "Los cuidadores de un rancho de caballos de California se cruzan con una fuerza misteriosa que afecta el comportamiento humano y animal.",
+        "imagen": "https://www.lahiguera.net/cinemania/pelicula/10138/nop-cartel-10474.jpg",
+        "idComentarios": []
+    },
+    {
+        "id": "5",
+        "titulo": "santi",
+        "ano": "2002",
+        "idDirector": "2",
+        "idGenero": "1",
+        "sinopsis": "no se",
+        "imagen": "no sseeesese",
+        "idComentarios": [
+            "1"
+        ]
+    },
+    {
+        "id": "6",
+        "titulo": "Lautaro capo",
+        "ano": "2001",
+        "idDirector": "1",
+        "idGenero": "1",
+        "sinopsis": "Un ogro re sarpado",
+        "imagen": "Una imagen re cheta",
+        "idComentarios": []
+    },
+    {
+        "id": "7",
+        "titulo": "Shrek",
+        "ano": "2001",
+        "idDirector": "1",
+        "idGenero": "1",
+        "sinopsis": "Un ogro re sarpado",
+        "imagen": "Una imagen re cheta",
+        "idComentarios": [
+            "1"
+        ]
+    },
+    {
+        "id": "8",
+        "titulo": "Shrek",
+        "ano": "2001",
+        "idDirector": "1",
+        "idGenero": "1",
+        "sinopsis": "Un ogro re sarpado",
+        "imagen": "Una imagen re cheta",
+        "idComentarios": []
+    },
+    {
+        "id": "9",
+        "titulo": "Shrek",
+        "ano": "2001",
+        "idDirector": "1",
+        "idGenero": "1",
+        "sinopsis": "Un ogro re sarpado",
+        "imagen": "Una imagen re cheta",
+        "idComentarios": []
+    },
+    {
+        "id": "10",
+        "titulo": "Shrek",
+        "ano": "2001",
+        "idDirector": "1",
+        "idGenero": "1",
+        "sinopsis": "Un ogro re sarpado",
+        "imagen": "Una imagen re cheta",
+        "idComentarios": []
+    },
+    {
+        "id": "11",
+        "titulo": "Shrek",
+        "ano": "2001",
+        "idDirector": "1",
+        "idGenero": "1",
+        "sinopsis": "Un ogro re sarpado",
+        "imagen": "Una imagen re cheta",
+        "idComentarios": []
+    },
+    {
+        "id": "12",
+        "titulo": "Shrek",
+        "ano": "2001",
+        "idDirector": "1",
+        "idGenero": "1",
+        "sinopsis": "Un ogro re sarpado",
+        "imagen": "Una imagen re cheta",
+        "idComentarios": []
+    },
+    {
+        "id": "13",
+        "titulo": "lautaro",
+        "ano": "2002",
+        "idDirector": "2",
+        "idGenero": "1",
+        "sinopsis": "4",
+        "imagen": "2",
+        "idComentarios": []
+    },
+    {
+        "id": "14",
+        "titulo": "santiago",
+        "ano": "2003",
+        "idDirector": "2",
+        "idGenero": "1",
+        "sinopsis": "3",
+        "imagen": "2",
+        "idComentarios": []
+    },
+    {
+        "id": "15",
+        "titulo": "hola",
+        "ano": "2002",
+        "idDirector": "1",
+        "idGenero": "2",
+        "sinopsis": "3",
+        "imagen": "4",
+        "idComentarios": []
+    }
+]

@@ -1,0 +1,17 @@
+[
+    {
+        "id": "1",
+        "idUsuario": "1",
+        "comentario": "Nashe"
+    },
+    {
+        "id": "2",
+        "idUsuario": "1",
+        "comentario": "Hola"
+    },
+    {
+        "id": "3",
+        "idUsuario": "1",
+        "comentario": "Tu mama"
+    }
+]
