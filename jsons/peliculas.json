@@ -195,5 +195,35 @@
         "sinopsis": "2",
         "imagen": "2",
         "idComentarios": []
+    },
+    {
+        "id": "20",
+        "titulo": "hola",
+        "ano": "2000",
+        "idDirector": "1",
+        "idGenero": "1",
+        "sinopsis": "xaby",
+        "imagen": "xaby",
+        "idComentarios": []
+    },
+    {
+        "id": "21",
+        "titulo": "hola",
+        "ano": "2000",
+        "idDirector": "2",
+        "idGenero": "2",
+        "sinopsis": "2",
+        "imagen": "2",
+        "idComentarios": []
+    },
+    {
+        "id": "22",
+        "titulo": "Santiago",
+        "ano": "2002",
+        "idDirector": "1",
+        "idGenero": "1",
+        "sinopsis": "nose",
+        "imagen": "tomas",
+        "idComentarios": []
     }
 ]

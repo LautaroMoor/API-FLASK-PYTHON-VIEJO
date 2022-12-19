@@ -2,6 +2,7 @@ from flask import Flask, jsonify, Response, request
 import funciones as fc
 from http import HTTPStatus
 import json
+from random import choice
 
 app = Flask(__name__)
 
@@ -118,7 +119,7 @@ def savePelicula():
                 pelicula["idGenero"] = nuevaPeliculaDicccionario["idGenero"]
             elif nuevaPeliculaDicccionario["sinopsis"] != '':
                 pelicula["sinopsis"] = nuevaPeliculaDicccionario["sinopsis"]
-            elif nuevaPeliculaDicccionario["imagen"] != '':
+            elif nuevaPeliculaDicccionario["imagen"] != 'no cargado':
                 pelicula["imagen"] = nuevaPeliculaDicccionario["imagen"]
 
     #Actualizando JSONs
@@ -127,20 +128,37 @@ def savePelicula():
 
     return 'Pelicula exitosamente modificada'
 
-@app.route("/peliculas/delete/<id>", methods=['DELETE'])
-def deletePelicula(id):
+@app.route("/peliculas/delete/<id>/idUsuario/<idUsuario>", methods=['DELETE'])
+def deletePelicula(id, idUsuario):
     #Obteneniendo JSONs
     peliculas = fc.obtenerPeliculas()
+    comentarios = fc.obtenerComentarios()
+    comentariosOtrosUsuarios = False
+    valor = {}
 
     for pelicula in peliculas:
         if pelicula["id"] == id:
-            peliculas.remove(pelicula)
-            #Actualizando JSONs
-            with open('jsons/peliculas.json', 'w') as archivoJson:
-                json.dump(peliculas, archivoJson, indent=4)
-            return 'Borrado exitoso'
+            for comentarioRecorrido in pelicula["idComentarios"]:
+                for comentario in comentarios:
+                    if comentarioRecorrido == comentario["id"]  and comentario["idUsuario"] != idUsuario:
+                        comentariosOtrosUsuarios = True
+        if comentariosOtrosUsuarios == False and pelicula["id"] == id:
+            valor = pelicula 
+            for peliculaIdComentarios in valor["idComentarios"]:
+                for comentario in comentarios:
+                    if comentario['id'] == peliculaIdComentarios:
+                        comentarios.remove(comentario)
 
-    return 'Borrado no exitoso'
+    if comentariosOtrosUsuarios == True:
+        return 'Borrado no exitoso, tiene comentarios de otros usuarios o no se pudo eliminar correctamente'
+    else:
+        peliculas.remove(valor)
+        #Actualizando JSONs
+        with open('jsons/peliculas.json', 'w') as archivoJson:
+            json.dump(peliculas, archivoJson, indent=4)
+        with open('jsons/comentarios.json', 'w') as archivoJson:
+            json.dump(comentarios, archivoJson, indent=4)
+        return 'Borrado exitoso'
 
 @app.route("/peliculas/<id>")
 def getPeliculaByCodigo(id):
@@ -169,6 +187,11 @@ def getUltimas10Peliculas():
         return jsonify('No hay peliculas')
     else:
         return jsonify(ultimas10Peliculas)
+
+@app.route("/pelicularandom")
+def getPeliculaRandom():
+    peliculas = fc.obtenerPeliculas()
+    return choice(peliculas)
 
 #ABM Comentarios
 @app.route("/comentario/create/idPelicula/<idPelicula>", methods=['POST'])
@@ -201,8 +224,6 @@ def deleteComentarios(id,idUsuario):
     peliculas = fc.obtenerPeliculas()
     borrado = False
 
-    listaComentariosUsuario = []
-
     for comentario in comentarios:
         if comentario["idUsuario"] == idUsuario and comentario["id"] == id:
             comentarios.remove(comentario)
@@ -211,6 +232,7 @@ def deleteComentarios(id,idUsuario):
                     if comentarioRecorrido == id:
                         borrado = True
                         pelicula["idComentarios"].remove(comentarioRecorrido)
+
     #Actulizando JSONs
     with open('jsons/comentarios.json', 'w') as archivoJson:
         json.dump(comentarios, archivoJson, indent=4)
@@ -251,6 +273,14 @@ def saveComentarios():
         json.dump(comentarios, archivoJson, indent=4)
 
     return 'Modificacion con exito'
+
+@app.route("/comentario/<id>")
+def getComentariosById(id):
+    comentarios = fc.obtenerComentarios()
+
+    for comentario in comentarios:
+        if comentario['id'] == id:
+            return jsonify(comentario)
 
 @app.route("/peliculas/<idPelicula>/comentarios/")
 def getComentarios(idPelicula):
