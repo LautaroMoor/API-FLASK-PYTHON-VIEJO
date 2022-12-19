@@ -99,23 +99,33 @@ def createPelicula():
 
     return 'Pelicula registrada correctamente.'
 
-@app.route("/peliculas/save/<id>/titulo/<titulo>/ano/<ano>/idDirector/<idDirector>/sinopsis/<sinopsis>", methods=['PUT'])
-def savePelicula(id,titulo,ano,idDirector,sinopsis):
+@app.route("/peliculas/save/", methods=['PUT'])
+def savePelicula():
     #Obteneniendo JSONs
     peliculas = fc.obtenerPeliculas()
 
+    nuevaPeliculaDicccionario = request.get_json()
+
     for pelicula in peliculas:
-        if pelicula["id"] == id:
-            pelicula["titulo"] = titulo
-            pelicula["ano"] = ano
-            pelicula["idDirector"] = idDirector
-            pelicula["sinopsis"] = sinopsis
+        if pelicula["id"] == nuevaPeliculaDicccionario["id"]:
+            if nuevaPeliculaDicccionario["titulo"] != '':
+                pelicula["titulo"] = nuevaPeliculaDicccionario["titulo"]
+            elif nuevaPeliculaDicccionario["ano"] != '':
+                pelicula["ano"] = nuevaPeliculaDicccionario["ano"]
+            elif nuevaPeliculaDicccionario["idDirector"] != '':
+                pelicula["idDirector"] = nuevaPeliculaDicccionario["idDirector"]
+            elif nuevaPeliculaDicccionario["idGenero"] != '':
+                pelicula["idGenero"] = nuevaPeliculaDicccionario["idGenero"]
+            elif nuevaPeliculaDicccionario["sinopsis"] != '':
+                pelicula["sinopsis"] = nuevaPeliculaDicccionario["sinopsis"]
+            elif nuevaPeliculaDicccionario["imagen"] != '':
+                pelicula["imagen"] = nuevaPeliculaDicccionario["imagen"]
 
     #Actualizando JSONs
     with open('jsons/peliculas.json', 'w') as archivoJson:
         json.dump(peliculas, archivoJson, indent=4)
 
-    return jsonify(peliculas)
+    return 'Pelicula exitosamente modificada'
 
 @app.route("/peliculas/delete/<id>", methods=['DELETE'])
 def deletePelicula(id):

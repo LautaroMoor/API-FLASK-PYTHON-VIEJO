@@ -1,9 +1,9 @@
 [
     {
         "id": "1",
-        "titulo": "Shrek",
-        "ano": "2001",
-        "idDirector": "1",
+        "titulo": "tomas",
+        "ano": "2005",
+        "idDirector": "2",
         "idGenero": "1",
         "sinopsis": "Un ogro divertido",
         "imagen": "https://static.wikia.nocookie.net/shrek/images/7/7c/Shrek_Poster_02.jpg/revision/latest?cb=20190315035135&path-prefix=es",
@@ -154,6 +154,46 @@
         "idGenero": "2",
         "sinopsis": "3",
         "imagen": "4",
+        "idComentarios": []
+    },
+    {
+        "id": "16",
+        "titulo": "pelicula nueva",
+        "ano": "2005",
+        "idDirector": "1",
+        "idGenero": "1",
+        "sinopsis": "no se",
+        "imagen": "nose.png",
+        "idComentarios": []
+    },
+    {
+        "id": "17",
+        "titulo": "pelicula",
+        "ano": "1111",
+        "idDirector": "1",
+        "idGenero": "1",
+        "sinopsis": "1",
+        "imagen": "1",
+        "idComentarios": []
+    },
+    {
+        "id": "18",
+        "titulo": "1",
+        "ano": "1111",
+        "idDirector": "1",
+        "idGenero": "1",
+        "sinopsis": "1",
+        "imagen": "1",
+        "idComentarios": []
+    },
+    {
+        "id": "19",
+        "titulo": "2",
+        "ano": "2222",
+        "idDirector": "2",
+        "idGenero": "2",
+        "sinopsis": "2",
+        "imagen": "2",
         "idComentarios": []
     }
 ]
