@@ -1,4 +1,3 @@
-from flask import jsonify
 import json
 
 #Leer JSONs

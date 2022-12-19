@@ -1,5 +1,4 @@
-from flask import Flask, jsonify, Response
-from requests import Timeout
+from flask import Flask, jsonify, Response, request
 import funciones as fc
 from http import HTTPStatus
 import json
@@ -13,10 +12,10 @@ def getLogin(usuarioUI,contrasenaUI):
     usuarios = fc.obtenerUsuarios()
 
     for usuario in usuarios:
-        if usuario['usuario'] == usuarioUI and usuario['contrasena'] == contrasenaUI:
-            return "1"
+        if usuario['usuario'] == usuarioUI and usuario['contrasena'] == contrasenaUI and usuarioUI != '' and contrasenaUI != '':
+            return str(usuario['id'])
             
-    return "0"
+    return 'Error'
 
 @app.route("/directores")
 def getDirectores():
@@ -24,11 +23,29 @@ def getDirectores():
     directores = fc.obtenerDirectores()
     return jsonify(directores)
 
+@app.route("/directores/<id>")
+def getDirectoresByCodigo(id):
+    #Obteneniendo JSONs
+    directores = fc.obtenerDirectores()
+    for director in directores:
+        if director['id'] == id:
+            return director
+    return Response("{}", status=HTTPStatus.NOT_FOUND)
+
 @app.route("/generos")
 def getGeneros():
     #Obteneniendo JSONs
     generos = fc.obtenerGeneros()
     return jsonify(generos)
+
+@app.route("/generos/<id>")
+def getGenerosByCodigo(id):
+    #Obteneniendo JSONs
+    generos = fc.obtenerGeneros()
+    for genero in generos:
+        if genero['id'] == id:
+            return genero
+    return Response("{}", status=HTTPStatus.NOT_FOUND)
 
 @app.route("/peliculas/director/<id>")
 def getPeliculasByDirector(id):
@@ -64,24 +81,23 @@ def getPeliculasByPortada():
 def getPeliculas():
     #Obteneniendo JSONs
     peliculas = fc.obtenerPeliculas()
-
     return jsonify(peliculas)
 
-@app.route("/peliculas/create/titulo/<titulo>/ano/<ano>/idDirector/<idDirector>/idGenero/<idGenero>/sinopsis/<sinopsis>/imagen/<imagen>", methods=['POST'])
-def createPelicula(titulo, ano, idDirector, idGenero, sinopsis, imagen):
+@app.route("/peliculas/create", methods=['POST'])
+def createPelicula():
     #Obteneniendo JSONs
     peliculas = fc.obtenerPeliculas()
+    nuevaPelicula = request.get_json()
+    id= fc.nuevaIdPeliculas()
 
-    id = fc.nuevaIdPeliculas()
-
-    nuevaPelicula={"id":id,"titulo":titulo, "ano":ano, "idDirector":idDirector, "idGenero":idGenero, "sinopsis":sinopsis, "imagen":imagen, "idComentarios":[]}
+    nuevaPelicula["id"] = id
     peliculas.append(nuevaPelicula)
 
     #Actualizando JSONs
     with open('jsons/peliculas.json', 'w') as archivoJson:
         json.dump(peliculas, archivoJson, indent=4)
 
-    return jsonify(peliculas)
+    return 'Pelicula registrada correctamente.'
 
 @app.route("/peliculas/save/<id>/titulo/<titulo>/ano/<ano>/idDirector/<idDirector>/sinopsis/<sinopsis>", methods=['PUT'])
 def savePelicula(id,titulo,ano,idDirector,sinopsis):
@@ -112,7 +128,9 @@ def deletePelicula(id):
             #Actualizando JSONs
             with open('jsons/peliculas.json', 'w') as archivoJson:
                 json.dump(peliculas, archivoJson, indent=4)
-            return jsonify(peliculas)
+            return 'Borrado exitoso'
+
+    return 'Borrado no exitoso'
 
 @app.route("/peliculas/<id>")
 def getPeliculaByCodigo(id):
@@ -143,15 +161,15 @@ def getUltimas10Peliculas():
         return jsonify(ultimas10Peliculas)
 
 #ABM Comentarios
-@app.route("/comentario/create/idPelicula/<idPelicula>/idUsuario/<idUsuario>/comentario/<comentarioNuevo>", methods=['POST'])
-def createComentarios(idPelicula,idUsuario,comentarioNuevo):
+@app.route("/comentario/create/idPelicula/<idPelicula>", methods=['POST'])
+def createComentarios(idPelicula):
     #Obteneniendo JSONs
     comentarios = fc.obtenerComentarios()
     peliculas = fc.obtenerPeliculas()
-
     id = fc.nuevoIdComentario()
-    
-    comentarioNuevo = {"id":id,"idUsuario":idUsuario,"comentario":comentarioNuevo}
+
+    comentarioNuevo = request.get_json()
+    comentarioNuevo["id"] = id
     comentarios.append(comentarioNuevo)
     
     for pelicula in peliculas:
@@ -164,46 +182,65 @@ def createComentarios(idPelicula,idUsuario,comentarioNuevo):
     with open('jsons/peliculas.json', 'w') as archivoJson:
         json.dump(peliculas, archivoJson, indent=4)
 
-    return jsonify(comentarios)
+    return 'Creacion de comentario exitosa'
 
-@app.route("/comentario/delete/<id>", methods=['DELETE'])
-def deleteComentarios(id):
+@app.route("/comentario/idUsuario/<idUsuario>/delete/<id>", methods=['DELETE'])
+def deleteComentarios(id,idUsuario):
     #Obteneniendo JSONs
     comentarios = fc.obtenerComentarios()
     peliculas = fc.obtenerPeliculas()
+    borrado = False
+
+    listaComentariosUsuario = []
 
     for comentario in comentarios:
-        if comentario["id"] == id:
+        if comentario["idUsuario"] == idUsuario and comentario["id"] == id:
             comentarios.remove(comentario)
-
-    for pelicula in peliculas:
-        for comentarioRecorrido in pelicula["idComentarios"]:
-            if comentarioRecorrido == id:
-                pelicula["idComentarios"].remove(comentarioRecorrido)
-
+            for pelicula in peliculas:
+                for comentarioRecorrido in pelicula["idComentarios"]:
+                    if comentarioRecorrido == id:
+                        borrado = True
+                        pelicula["idComentarios"].remove(comentarioRecorrido)
     #Actulizando JSONs
     with open('jsons/comentarios.json', 'w') as archivoJson:
         json.dump(comentarios, archivoJson, indent=4)
     with open('jsons/peliculas.json', 'w') as archivoJson:
         json.dump(peliculas, archivoJson, indent=4)
 
-    return jsonify(comentarios)
+    if borrado:
+        return 'Borrado con exito'
+    else:
+        return 'Borrado sin exito'
 
-@app.route("/comentario/save/<id>/idUsuario/<idUsuario>/comentario/<comentarioNuevo>", methods=['PUT'])
-def saveComentarios(id,idUsuario,comentarioNuevo):
+@app.route("/comentario/idUsuario/<idUsuario>")
+def getComentariosByUsuario(idUsuario):
+    #Obteneniendo JSONs
+    comentarios = fc.obtenerComentarios()
+
+    listaComentariosUsuario = []
+
+    for comentario in comentarios:
+        if comentario["idUsuario"] == idUsuario:
+            listaComentariosUsuario.append(comentario)
+
+    return jsonify(listaComentariosUsuario)
+
+@app.route("/comentario/save", methods=['PUT'])
+def saveComentarios():
     #Obteneniendo JSONs
     comentarios = fc.obtenerComentarios()
     
+    comentarioNuevoLista = request.get_json()
+
     for comentario in comentarios:
-        if comentario['id'] == id and comentario['idUsuario'] == idUsuario:
-            comentario['comentario'] = comentarioNuevo
+        if comentario['id'] == comentarioNuevoLista['id'] and comentario['idUsuario'] == comentarioNuevoLista['idUsuario']:
+            comentario['comentario'] = comentarioNuevoLista['comentario']
 
     #Actulizando JSONs
     with open('jsons/comentarios.json', 'w') as archivoJson:
         json.dump(comentarios, archivoJson, indent=4)
 
-    return jsonify(comentarios)
-
+    return 'Modificacion con exito'
 
 @app.route("/peliculas/<idPelicula>/comentarios/")
 def getComentarios(idPelicula):
@@ -223,3 +260,5 @@ def getComentarios(idPelicula):
 
     return Response("{}", status=HTTPStatus.NOT_FOUND)
 
+if __name__ == "__name__": 
+	app.run(debug = True, port=5000)

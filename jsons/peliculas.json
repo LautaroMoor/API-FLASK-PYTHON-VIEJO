@@ -20,8 +20,7 @@
         "sinopsis": "Mueren de risa",
         "imagen": "https://static.wikia.nocookie.net/doblaje/images/6/66/Muertos-de-risa-poster.jpg/revision/latest?cb=20121102020611&path-prefix=es",
         "idComentarios": [
-            "2",
-            "3"
+            "2"
         ]
     },
     {
@@ -32,9 +31,7 @@
         "idGenero": "2",
         "sinopsis": "Cae un meteorito",
         "imagen": "https://es.web.img2.acsta.net/pictures/21/11/29/17/20/1865984.jpg",
-        "idComentarios": [
-            "1"
-        ]
+        "idComentarios": []
     },
     {
         "id": "4",
@@ -55,7 +52,8 @@
         "sinopsis": "no se",
         "imagen": "no sseeesese",
         "idComentarios": [
-            "1"
+            "3",
+            "4"
         ]
     },
     {
@@ -76,9 +74,7 @@
         "idGenero": "1",
         "sinopsis": "Un ogro re sarpado",
         "imagen": "Una imagen re cheta",
-        "idComentarios": [
-            "1"
-        ]
+        "idComentarios": []
     },
     {
         "id": "8",
